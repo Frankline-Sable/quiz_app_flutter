@@ -19,27 +19,44 @@ class QuizApp extends StatelessWidget {
             "Simple Quiz App"
         )
       ),
-      body: Column(
-        children: [
-          Text(
-              "This is a dummy question?"),
-          ElevatedButton(
-              onPressed: null,
-              child: Text(
-                'Answer 1'
-              )),
-          ElevatedButton(
-              onPressed: null,
-              child: Text(
-                  'Answer 1'
-              )),
-          ElevatedButton(
-              onPressed: null,
-              child: Text(
-                  'Answer 1'
-              )),
-        ],
+      body: Center(
+        child: Column(
+          children: [
+            SizedBox(height: 16),
+            Text(
+              "This is a dummy question?",
+              style: TextStyle(fontSize: 24),),
+            SizedBox(height: 16),
+            ElevatedButton(
+                onPressed: ()=>{
+                  _answerQuestion('answer 1')
+                },
+                child: Text(
+                    'Answer 1'
+                )),
+            SizedBox(height: 16),
+            ElevatedButton(
+                onPressed: ()=>{
+                  _answerQuestion('answer 2')
+                },
+                child: Text(
+                    'Answer 2'
+                )),
+            SizedBox(height: 16),
+            ElevatedButton(
+                onPressed: ()=>{
+                  _answerQuestion('answer 3')
+                },
+                child: Text(
+                    'Answer 3'
+                )),
+          ],
+        )
       ),
     );
+  }
+
+  void _answerQuestion(String answer){
+    print("Answer $answer");
   }
 }
