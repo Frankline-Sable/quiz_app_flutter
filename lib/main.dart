@@ -5,7 +5,10 @@ import 'package:quiz_app_flutter/result.dart';
 import 'answer.dart';
 
 void main() {
-  runApp(MaterialApp(title: 'Quiz App', home: QuizApp()));
+  runApp(MaterialApp(
+    title: 'Quiz App',
+    home: QuizApp(),
+  ));
 }
 
 class QuizApp extends StatefulWidget {
@@ -45,10 +48,12 @@ class QuizAppState extends State {
   int _questionIndex = 0;
   int _totalScore = 0;
   int _gainedScore = 0;
+  Color color = Colors.white;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: color,
       appBar: AppBar(title: const Text("Simple Quiz App")),
       body: Center(
           child: _questionIndex < _questions.length
@@ -58,10 +63,22 @@ class QuizAppState extends State {
   }
 
   void _answerQuestion(String answer, int score) {
+    if(_questionIndex<1){
+      if(answer=='red') {
+        color=Colors.red;
+      } else if(answer=='blue') {
+        color=Colors.blue;
+      } else{
+        color=Colors.green;
+      }
+    }else{
+      color=Colors.white;
+    }
+
     setState(() {
       _questionIndex++;
       _totalScore += score;
-      _gainedScore=score;
+      _gainedScore = score;
     });
 
     print("Answer $answer score $score total = $_totalScore");
@@ -71,6 +88,7 @@ class QuizAppState extends State {
     setState(() {
       _questionIndex = 0;
       _totalScore = 0;
+      _gainedScore=0;
     });
   }
 }
