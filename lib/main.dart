@@ -13,6 +13,33 @@ class QuizApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+            "Simple Quiz App"
+        )
+      ),
+      body: Column(
+        children: [
+          Text(
+              "This is a dummy question?"),
+          ElevatedButton(
+              onPressed: null,
+              child: Text(
+                'Answer 1'
+              )),
+          ElevatedButton(
+              onPressed: null,
+              child: Text(
+                  'Answer 1'
+              )),
+          ElevatedButton(
+              onPressed: null,
+              child: Text(
+                  'Answer 1'
+              )),
+        ],
+      ),
+    );
   }
 }
