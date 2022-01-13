@@ -1,62 +1,65 @@
 import 'package:flutter/material.dart';
 
-void main(){
-  runApp(
-    const MaterialApp(
-      title: 'Quiz App',
-      home: QuizApp()
-    )
-  );
+void main() {
+  runApp( MaterialApp(title: 'Quiz App', home: QuizApp()));
 }
-class QuizApp extends StatelessWidget {
-  const QuizApp({Key? key}) : super(key: key);
+
+class QuizApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return QuizAppState();
+  }
+}
+
+class QuizAppState extends State {
+  final List<Map<String, Object>> _questions = [
+    {
+      "question": 'What\'s my favourite color?',
+      'answers': ['red', 'blue', 'green']
+    },
+    {
+      "question": 'Which is my preferred food?',
+      'answers': ['samaki', 'rice', 'chapati']
+    },
+    {
+      "question": 'My long term goal is?',
+      'answers': ['family', 'money', 'fame']
+    }
+  ];
+  int _questionIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-            "Simple Quiz App"
-        )
-      ),
+      appBar: AppBar(title: const Text("Simple Quiz App")),
       body: Center(
-        child: Column(
-          children: [
-            SizedBox(height: 16),
-            Text(
-              "This is a dummy question?",
-              style: TextStyle(fontSize: 24),),
-            SizedBox(height: 16),
-            ElevatedButton(
-                onPressed: ()=>{
-                  _answerQuestion('answer 1')
-                },
-                child: Text(
-                    'Answer 1'
-                )),
-            SizedBox(height: 16),
-            ElevatedButton(
-                onPressed: ()=>{
-                  _answerQuestion('answer 2')
-                },
-                child: Text(
-                    'Answer 2'
-                )),
-            SizedBox(height: 16),
-            ElevatedButton(
-                onPressed: ()=>{
-                  _answerQuestion('answer 3')
-                },
-                child: Text(
-                    'Answer 3'
-                )),
-          ],
-        )
-      ),
+          child: Column(
+        children: [
+          SizedBox(height: 16),
+          Text(
+            _questions[_questionIndex]['question'] as String,
+            style: TextStyle(fontSize: 24),
+          ),
+          SizedBox(height: 16),
+          ...(_questions[_questionIndex]['answers'] as List<String>).map((answer){
+            return Column(
+              children: [
+                ElevatedButton(
+                    onPressed: () => {_answerQuestion(answer)},
+                    child: Text(answer)),
+                SizedBox(height: 16),
+              ],
+            );
+          }).toList()
+        ],
+      )),
     );
   }
 
-  void _answerQuestion(String answer){
+  void _answerQuestion(String answer) {
+    setState(() {
+      _questionIndex++;
+    });
     print("Answer $answer");
   }
 }
