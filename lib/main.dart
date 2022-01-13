@@ -12,21 +12,35 @@ class QuizApp extends StatefulWidget {
 }
 
 class QuizAppState extends State {
+
   final List<Map<String, Object>> _questions = [
     {
       "question": 'What\'s my favourite color?',
-      'answers': ['red', 'blue', 'green']
+      'answers': [
+        {'answer':'red','score':4},
+        {'answer':'blue','score':7},
+        {'answer':'green','score':2}
+      ]
     },
     {
       "question": 'Which is my preferred food?',
-      'answers': ['samaki', 'rice', 'chapati']
+      'answers': [
+        {'answer':'samaki','score':4},
+        {'answer':'chapo','score':8},
+        {'answer':'rice','score':2}
+      ]
     },
     {
       "question": 'My long term goal is?',
-      'answers': ['family', 'money', 'fame']
+      'answers': [
+        {'answer':'family','score':5},
+        {'answer':'money','score':2},
+        {'answer':'fame','score':8}
+      ]
     }
   ];
   int _questionIndex = 0;
+  int _totalScore=0;
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +56,13 @@ class QuizAppState extends State {
                 style: TextStyle(fontSize: 24),
               ),
               SizedBox(height: 16),
-              ...(_questions[_questionIndex]['answers'] as List<String>).map((answer){
+              ...(_questions[_questionIndex]['answers'] as  List<Map<String, Object>>).map((answer){
+
                 return Column(
                   children: [
                     ElevatedButton(
-                        onPressed: () => {_answerQuestion(answer)},
-                        child: Text(answer)),
+                        onPressed: () => {_answerQuestion((answer['answer'] as String),answer['score'] as int)},
+                        child: Text(answer['answer'] as String)),
                     SizedBox(height: 16),
                   ],
                 );
@@ -58,7 +73,7 @@ class QuizAppState extends State {
         height: 200,
         child: Column(
             children: [
-              Text("You have run out of questions"),
+              Text("You have run out of questions, score is $_totalScore"),
               SizedBox(height: 16),
               TextButton(onPressed: _restartQuiz, child: Text('Restart Quiz'))
             ],
@@ -68,15 +83,18 @@ class QuizAppState extends State {
     );
   }
 
-  void _answerQuestion(String answer) {
+  void _answerQuestion(String answer, int score) {
     setState(() {
       _questionIndex++;
+      _totalScore=0;
     });
-    print("Answer $answer");
+    _totalScore+=score;
+    print("Answer $answer score $score total = $_totalScore");
   }
   void _restartQuiz(){
     setState(() {
       _questionIndex=0;
+      _totalScore=0;
     });
   }
 }
